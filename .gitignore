@@ -1,0 +1,8 @@
+# Ignore build output directories for BELoader
+BELoader/bin/
+BELoader/obj/
+
+# Ignore compiler-generated files
+*.d
+*.obj
+*.mk
