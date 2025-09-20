@@ -45,5 +45,22 @@ namespace BELoader
 
             tooltipsList.Add(toolTip);
         }
+
+        static public void FitDropDownWidth(System.Windows.Forms.ComboBox cb)
+        {
+            int max = 0;
+            foreach (var it in cb.Items)
+            {
+                var s = cb.GetItemText(it);
+                var size = TextRenderer.MeasureText(s, cb.Font);
+                if (size.Width > max) max = size.Width;
+            }
+            if (cb.Items.Count > cb.MaxDropDownItems)
+                max += SystemInformation.VerticalScrollBarWidth;
+            cb.DropDownWidth = Math.Max(cb.Width, max + 12);
+        }
+
+
+
     }
 }

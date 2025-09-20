@@ -15,16 +15,26 @@ namespace BELoader
     {
         public struct Literals
         {
-            public const int addressFinal = 1;
             public const int nbytesmod = 2048; // 512 longs per buffer  = 2048 bytes
             public const int CodeStartAddress = 0x83000;
             public const uint ADLER_MOD = 65521; // 2^16 - 15
+            public const uint AddressFinal = 0x3f3eff ; // The statistics sector starts at 0x3f3f00
+            public const uint AddressStatistics = 0x3f3f00;
+            public const uint AddressVerse = 0x3f3f00;
+            public const uint AddressStartOfCode = 0x3f3f40;
+            public const uint AddressEndOfCode = 0x3f3f42;
+            public const uint AddressAdler32ChckSum = 0x3f3f44;
+            public const uint AddressCANAddressBurner = 0x3f3f80;
+            public const uint AddressCANAddressJ1939 = 0x3f3f82;
+            public const uint AddressDeviceSerialNumber = 0x3f4000;
+            public const int SectorSize = 16384 ;
+            public const double MinTimeBetweenMessages = 2.0 ;
         }
 
 
 
         /// <summary>
-        /// Adler-32 over nWords words of a ushort[] starting at StartAddress.
+        /// Adler-32 over nWords words of a ushort[] starting relative at StartAddress.
         /// Each ushort is treated as a single symbol (0..65535).
         /// </summary>
         public static uint ComputeAdler32(ushort[] data, int StartAddress, int nWords)
@@ -56,10 +66,11 @@ namespace BELoader
         /// <param name="addressFinal">Upper limit address to ignore (password/checksum sector).</param>
         /// <param name="nbytesmod">Block size for rounding up max address.</param>
         /// <returns>Tuple of (minAddress, maxAddress).</returns>
-        public static void FindMinMax(string filename, int nbytesmod, out uint minadd, out uint maxadd )
+        public static bool FindMinMax(string filename, int nbytesmod, out uint minadd, out uint maxadd , out string ErrMsg)
         {
             minadd = UInt32.MaxValue;
             maxadd = 0;
+            ErrMsg = null;
             // Mark we did not find the file end yet 
             bool EndIsNext = false;
 
@@ -73,20 +84,32 @@ namespace BELoader
                     if (line == null)
                     { // This is the last line 
                         if (!EndIsNext)
+                        {
                             // If termination not signalled, that's an error 
-                            throw new InvalidDataException("Premature end of file");
-                        break;
+                            ErrMsg = "Premature end of file";
+                            return false; 
+                        }
+                        else
+                        {
+                            break; 
+                        }
                     }
 
                     if (EndIsNext)
                     { // After end signal line cannot start with %
                         if (line.Length > 0 && line[0] == '%')
-                            throw new InvalidDataException("Expected end of file");
+                        {
+                            ErrMsg = "Expected end of file";
+                            return false;
+                        }
                     }
                     else
                     { // Till end signal all lines need start with %
                         if (!(line.Length > 0 && line[0] == '%'))
-                            throw new InvalidDataException("First character must be a percent sign");
+                        {
+                            ErrMsg = "First character must be a percent sign";
+                            return false;
+                        }
                     }
 
                     line = line.TrimEnd(); // deblank
@@ -103,7 +126,10 @@ namespace BELoader
                     else
                     { // Line type 6 is data to program - what we expect 
                         if (linetype != '6')
-                            throw new InvalidDataException("Expected a data line");
+                        {
+                            ErrMsg = "Expected a data line";
+                            return false;
+                        }
                     }
 
                     // Next comes the checksum 
@@ -111,11 +137,17 @@ namespace BELoader
 
                     // Check correct length of address specification 
                     if (line[6] != '8')  // (7)
-                        throw new InvalidDataException("Address number of digits should be 8");
+                    {
+                        ErrMsg = "Address number of digits should be 8";
+                        return false;
+                    }
 
                     // Verify actual line length fits the expected length 
                     if (reclen != line.Length - 1)
-                        throw new InvalidDataException("Unexpected line length");
+                    {
+                        ErrMsg = "Unexpected line length";
+                        return false;
+                    }
 
                     // Read the start address 
                     uint address = Convert.ToUInt32(line.Substring(7, 8), 16); // (8:15)
@@ -123,12 +155,16 @@ namespace BELoader
                     // And the number of bytes in this record, and verify the nibles make full bytes 
                     double nbytes = (reclen - 14) / 2.0;
                     if (nbytes != Math.Floor(nbytes))
-                        throw new InvalidDataException("Record should contain only full bytes");
+                    {
+                        ErrMsg = "Record should contain only full bytes";
+                        return false;
+                    }
+
 
                     // track min and max. 
                     // Do not consider addresses beyond the total range 
                     minadd = Math.Min(minadd, address);
-                    if (address < Literals.addressFinal)
+                    if (address < Literals.AddressFinal)
                     {   // Get the last address in use as start + length - 1 
                         uint candidate = address + (uint)nbytes - 1;
                         maxadd = Math.Max(maxadd, candidate);
@@ -147,7 +183,10 @@ namespace BELoader
 
                     // It is a byte checksum, tested modulo 256
                     if ((cs % 256) != csum)
-                        throw new InvalidDataException("Checksum error");
+                    {
+                        ErrMsg = "Line Checksum error";
+                        return false;
+                    }
                 }
             }
 
@@ -157,6 +196,8 @@ namespace BELoader
             {
                 maxadd = (uint)(nbytesmod * (n + 1) - 1);
             }
+
+            return true;
 
         }
 

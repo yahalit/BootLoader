@@ -1,22 +1,30 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Neta\\BELoader\\BELoader\\",
+  "WorkspaceRootPath": "C:\\Neta\\BELoader\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{1A103F6B-A5F5-4847-9C49-BAE0E24936EE}|BELoader.csproj|c:\\neta\\beloader\\beloader\\helpers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1A103F6B-A5F5-4847-9C49-BAE0E24936EE}|BELoader.csproj|solutionrelative:helpers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{1A103F6B-A5F5-4847-9C49-BAE0E24936EE}|BELoader.csproj|c:\\neta\\beloader\\pcan_t.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1A103F6B-A5F5-4847-9C49-BAE0E24936EE}|BELoader.csproj|solutionrelative:pcan_t.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1A103F6B-A5F5-4847-9C49-BAE0E24936EE}|BELoader.csproj|c:\\neta\\beloader\\beloader\\hexvirtualspace_t.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1A103F6B-A5F5-4847-9C49-BAE0E24936EE}|BELoader.csproj|solutionrelative:hexvirtualspace_t.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{1A103F6B-A5F5-4847-9C49-BAE0E24936EE}|BELoader.csproj|c:\\neta\\beloader\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1A103F6B-A5F5-4847-9C49-BAE0E24936EE}|BELoader.csproj|solutionrelative:class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1A103F6B-A5F5-4847-9C49-BAE0E24936EE}|BELoader.csproj|c:\\neta\\beloader\\beloader\\beloadermain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{1A103F6B-A5F5-4847-9C49-BAE0E24936EE}|BELoader.csproj|c:\\neta\\beloader\\beloadermain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1A103F6B-A5F5-4847-9C49-BAE0E24936EE}|BELoader.csproj|solutionrelative:beloadermain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1A103F6B-A5F5-4847-9C49-BAE0E24936EE}|BELoader.csproj|c:\\neta\\beloader\\beloader\\beloadermain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{1A103F6B-A5F5-4847-9C49-BAE0E24936EE}|BELoader.csproj|C:\\Neta\\BELoader\\hexvirtualspace_t.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1A103F6B-A5F5-4847-9C49-BAE0E24936EE}|BELoader.csproj|solutionrelative:hexvirtualspace_t.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1A103F6B-A5F5-4847-9C49-BAE0E24936EE}|BELoader.csproj|C:\\Neta\\BELoader\\beloadermain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{1A103F6B-A5F5-4847-9C49-BAE0E24936EE}|BELoader.csproj|solutionrelative:beloadermain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1A103F6B-A5F5-4847-9C49-BAE0E24936EE}|BELoader.csproj|c:\\neta\\beloader\\helpers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1A103F6B-A5F5-4847-9C49-BAE0E24936EE}|BELoader.csproj|solutionrelative:helpers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -35,49 +43,75 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "HexVirtualSpace_T.cs",
-              "DocumentMoniker": "C:\\Neta\\BELoader\\BELoader\\HexVirtualSpace_T.cs",
-              "RelativeDocumentMoniker": "HexVirtualSpace_T.cs",
-              "ToolTip": "C:\\Neta\\BELoader\\BELoader\\HexVirtualSpace_T.cs",
-              "RelativeToolTip": "HexVirtualSpace_T.cs",
-              "ViewState": "AgIAABgAAAAAAAAAAAAAACQAAAAYAAAAAAAAAA==",
+              "Title": "Class1.cs",
+              "DocumentMoniker": "C:\\Neta\\BELoader\\Class1.cs",
+              "RelativeDocumentMoniker": "Class1.cs",
+              "ToolTip": "C:\\Neta\\BELoader\\Class1.cs",
+              "RelativeToolTip": "Class1.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAQwDQAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-14T17:55:05.108Z",
+              "WhenOpened": "2025-09-19T17:10:33.158Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Helpers.cs",
-              "DocumentMoniker": "C:\\Neta\\BELoader\\BELoader\\Helpers.cs",
-              "RelativeDocumentMoniker": "Helpers.cs",
-              "ToolTip": "C:\\Neta\\BELoader\\BELoader\\Helpers.cs",
-              "RelativeToolTip": "Helpers.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Title": "PCAN_T.cs",
+              "DocumentMoniker": "C:\\Neta\\BELoader\\PCAN_T.cs",
+              "RelativeDocumentMoniker": "PCAN_T.cs",
+              "ToolTip": "C:\\Neta\\BELoader\\PCAN_T.cs",
+              "RelativeToolTip": "PCAN_T.cs",
+              "ViewState": "AgIAAE8AAAAAAAAAAAASwGcAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-14T17:13:31.258Z",
+              "WhenOpened": "2025-09-19T13:28:54.449Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
               "Title": "BeLoaderMain.cs",
-              "DocumentMoniker": "C:\\Neta\\BELoader\\BELoader\\BeLoaderMain.cs",
+              "DocumentMoniker": "C:\\Neta\\BELoader\\BeLoaderMain.cs",
               "RelativeDocumentMoniker": "BeLoaderMain.cs",
-              "ToolTip": "C:\\Neta\\BELoader\\BELoader\\BeLoaderMain.cs",
+              "ToolTip": "C:\\Neta\\BELoader\\BeLoaderMain.cs",
               "RelativeToolTip": "BeLoaderMain.cs",
-              "ViewState": "AgIAAB4AAAAAAAAAAAAYwDQAAAA8AAAAAAAAAA==",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAACEAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-14T17:08:23.62Z",
+              "WhenOpened": "2025-09-19T10:24:25.698Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "HexVirtualSpace_T.cs",
+              "DocumentMoniker": "C:\\Neta\\BELoader\\HexVirtualSpace_T.cs",
+              "RelativeDocumentMoniker": "HexVirtualSpace_T.cs",
+              "ToolTip": "C:\\Neta\\BELoader\\HexVirtualSpace_T.cs",
+              "RelativeToolTip": "HexVirtualSpace_T.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAD4vw0AAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-14T17:55:05.108Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Helpers.cs",
+              "DocumentMoniker": "C:\\Neta\\BELoader\\Helpers.cs",
+              "RelativeDocumentMoniker": "Helpers.cs",
+              "ToolTip": "C:\\Neta\\BELoader\\Helpers.cs",
+              "RelativeToolTip": "Helpers.cs",
+              "ViewState": "AgIAACMAAAAAAAAAAAAYwDAAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-14T17:13:31.258Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "BeLoaderMain.cs [Design]",
-              "DocumentMoniker": "C:\\Neta\\BELoader\\BELoader\\BeLoaderMain.cs",
+              "DocumentMoniker": "C:\\Neta\\BELoader\\BeLoaderMain.cs",
               "RelativeDocumentMoniker": "BeLoaderMain.cs",
-              "ToolTip": "C:\\Neta\\BELoader\\BELoader\\BeLoaderMain.cs [Design]",
+              "ToolTip": "C:\\Neta\\BELoader\\BeLoaderMain.cs [Design]",
               "RelativeToolTip": "BeLoaderMain.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-14T17:07:34.226Z",
