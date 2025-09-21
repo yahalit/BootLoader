@@ -39,23 +39,13 @@
             this.LabelEndAddress = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.LabelAdler32 = new System.Windows.Forms.Label();
-            this.ButtonSelectDevice = new System.Windows.Forms.Button();
             this.ButtonDownload = new System.Windows.Forms.Button();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.LabelDeviceType = new System.Windows.Forms.Label();
-            this.LebelDeviceSerialNumber = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.LebelBootCANID = new System.Windows.Forms.Label();
-            this.LabelJ1939CANID = new System.Windows.Forms.Label();
             this.comboPCAN = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
             this.ButtonConnectPCAN = new System.Windows.Forms.Button();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.technicianToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuBurnSerial = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStrip1.SuspendLayout();
+            this.NumericEcuID = new System.Windows.Forms.NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericEcuID)).BeginInit();
             this.SuspendLayout();
             // 
             // TextBoxHexFile
@@ -87,17 +77,17 @@
             // 
             // TextBoxMessageToHumanity
             // 
-            this.TextBoxMessageToHumanity.Location = new System.Drawing.Point(33, 270);
+            this.TextBoxMessageToHumanity.Location = new System.Drawing.Point(25, 336);
             this.TextBoxMessageToHumanity.Multiline = true;
             this.TextBoxMessageToHumanity.Name = "TextBoxMessageToHumanity";
-            this.TextBoxMessageToHumanity.Size = new System.Drawing.Size(520, 56);
+            this.TextBoxMessageToHumanity.Size = new System.Drawing.Size(520, 87);
             this.TextBoxMessageToHumanity.TabIndex = 3;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(36, 240);
+            this.label2.Location = new System.Drawing.Point(36, 297);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(182, 20);
             this.label2.TabIndex = 4;
@@ -158,111 +148,40 @@
             this.LabelAdler32.TabIndex = 10;
             this.LabelAdler32.Text = "Not yet calculated";
             // 
-            // ButtonSelectDevice
-            // 
-            this.ButtonSelectDevice.Location = new System.Drawing.Point(437, 96);
-            this.ButtonSelectDevice.Name = "ButtonSelectDevice";
-            this.ButtonSelectDevice.Size = new System.Drawing.Size(117, 28);
-            this.ButtonSelectDevice.TabIndex = 11;
-            this.ButtonSelectDevice.Text = "Select device";
-            this.ButtonSelectDevice.UseVisualStyleBackColor = true;
-            // 
             // ButtonDownload
             // 
+            this.ButtonDownload.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.ButtonDownload.Enabled = false;
-            this.ButtonDownload.Location = new System.Drawing.Point(437, 141);
+            this.ButtonDownload.Location = new System.Drawing.Point(25, 206);
             this.ButtonDownload.Name = "ButtonDownload";
-            this.ButtonDownload.Size = new System.Drawing.Size(117, 28);
+            this.ButtonDownload.Size = new System.Drawing.Size(193, 28);
             this.ButtonDownload.TabIndex = 12;
             this.ButtonDownload.TabStop = false;
             this.ButtonDownload.Text = "Download FW";
-            this.ButtonDownload.UseVisualStyleBackColor = true;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(37, 184);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(68, 13);
-            this.label6.TabIndex = 13;
-            this.label6.Text = "Device Type";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(37, 210);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(110, 13);
-            this.label7.TabIndex = 14;
-            this.label7.Text = "Device Serial Number";
-            // 
-            // LabelDeviceType
-            // 
-            this.LabelDeviceType.AutoSize = true;
-            this.LabelDeviceType.Location = new System.Drawing.Point(197, 187);
-            this.LabelDeviceType.Name = "LabelDeviceType";
-            this.LabelDeviceType.Size = new System.Drawing.Size(76, 13);
-            this.LabelDeviceType.TabIndex = 15;
-            this.LabelDeviceType.Text = "Not yet known";
-            // 
-            // LebelDeviceSerialNumber
-            // 
-            this.LebelDeviceSerialNumber.AutoSize = true;
-            this.LebelDeviceSerialNumber.Location = new System.Drawing.Point(197, 210);
-            this.LebelDeviceSerialNumber.Name = "LebelDeviceSerialNumber";
-            this.LebelDeviceSerialNumber.Size = new System.Drawing.Size(76, 13);
-            this.LebelDeviceSerialNumber.TabIndex = 16;
-            this.LebelDeviceSerialNumber.Text = "Not yet known";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(333, 187);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(68, 13);
-            this.label8.TabIndex = 17;
-            this.label8.Text = "Boot CAN ID";
+            this.ButtonDownload.UseVisualStyleBackColor = false;
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(333, 210);
+            this.label9.Location = new System.Drawing.Point(448, 122);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(75, 13);
             this.label9.TabIndex = 18;
             this.label9.Text = "J1939 CAN ID";
             // 
-            // LebelBootCANID
-            // 
-            this.LebelBootCANID.AutoSize = true;
-            this.LebelBootCANID.Location = new System.Drawing.Point(434, 187);
-            this.LebelBootCANID.Name = "LebelBootCANID";
-            this.LebelBootCANID.Size = new System.Drawing.Size(76, 13);
-            this.LebelBootCANID.TabIndex = 19;
-            this.LebelBootCANID.Text = "Not yet known";
-            // 
-            // LabelJ1939CANID
-            // 
-            this.LabelJ1939CANID.AutoSize = true;
-            this.LabelJ1939CANID.Location = new System.Drawing.Point(434, 210);
-            this.LabelJ1939CANID.Name = "LabelJ1939CANID";
-            this.LabelJ1939CANID.Size = new System.Drawing.Size(76, 13);
-            this.LabelJ1939CANID.TabIndex = 20;
-            this.LabelJ1939CANID.Text = "Not yet known";
-            // 
             // comboPCAN
             // 
             this.comboPCAN.Enabled = false;
             this.comboPCAN.FormattingEnabled = true;
-            this.comboPCAN.Location = new System.Drawing.Point(632, 88);
+            this.comboPCAN.Location = new System.Drawing.Point(297, 257);
             this.comboPCAN.Name = "comboPCAN";
-            this.comboPCAN.Size = new System.Drawing.Size(157, 21);
+            this.comboPCAN.Size = new System.Drawing.Size(257, 21);
             this.comboPCAN.TabIndex = 21;
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(629, 75);
+            this.label10.Location = new System.Drawing.Point(294, 236);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(82, 13);
             this.label10.TabIndex = 22;
@@ -271,7 +190,7 @@
             // ButtonConnectPCAN
             // 
             this.ButtonConnectPCAN.Enabled = false;
-            this.ButtonConnectPCAN.Location = new System.Drawing.Point(632, 48);
+            this.ButtonConnectPCAN.Location = new System.Drawing.Point(401, 203);
             this.ButtonConnectPCAN.Name = "ButtonConnectPCAN";
             this.ButtonConnectPCAN.Size = new System.Drawing.Size(155, 24);
             this.ButtonConnectPCAN.TabIndex = 23;
@@ -279,52 +198,39 @@
             this.ButtonConnectPCAN.UseVisualStyleBackColor = true;
             this.ButtonConnectPCAN.Click += new System.EventHandler(this.ButtonConnectPCAN_Click);
             // 
-            // menuStrip1
+            // NumericEcuID
             // 
-            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.technicianToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(843, 24);
-            this.menuStrip1.TabIndex = 24;
-            this.menuStrip1.Text = "menuStrip1";
-            // 
-            // technicianToolStripMenuItem
-            // 
-            this.technicianToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuBurnSerial});
-            this.technicianToolStripMenuItem.Name = "technicianToolStripMenuItem";
-            this.technicianToolStripMenuItem.Size = new System.Drawing.Size(76, 20);
-            this.technicianToolStripMenuItem.Text = "Technician";
-            this.technicianToolStripMenuItem.Click += new System.EventHandler(this.technicianToolStripMenuItem_Click);
-            // 
-            // toolStripMenuBurnSerial
-            // 
-            this.toolStripMenuBurnSerial.DoubleClickEnabled = true;
-            this.toolStripMenuBurnSerial.Name = "toolStripMenuBurnSerial";
-            this.toolStripMenuBurnSerial.Size = new System.Drawing.Size(180, 22);
-            this.toolStripMenuBurnSerial.Text = "BurnSerialNumber";
-            this.toolStripMenuBurnSerial.Click += new System.EventHandler(this.toolStripMenuBurnSerial_Click);
+            this.NumericEcuID.Location = new System.Drawing.Point(451, 147);
+            this.NumericEcuID.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.NumericEcuID.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.NumericEcuID.Name = "NumericEcuID";
+            this.NumericEcuID.Size = new System.Drawing.Size(103, 20);
+            this.NumericEcuID.TabIndex = 25;
+            this.NumericEcuID.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // BeLoaderMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(843, 370);
+            this.ClientSize = new System.Drawing.Size(586, 447);
+            this.Controls.Add(this.NumericEcuID);
             this.Controls.Add(this.ButtonConnectPCAN);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.comboPCAN);
-            this.Controls.Add(this.LabelJ1939CANID);
-            this.Controls.Add(this.LebelBootCANID);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.LebelDeviceSerialNumber);
-            this.Controls.Add(this.LabelDeviceType);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.label6);
             this.Controls.Add(this.ButtonDownload);
-            this.Controls.Add(this.ButtonSelectDevice);
             this.Controls.Add(this.LabelAdler32);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.LabelEndAddress);
@@ -336,13 +242,10 @@
             this.Controls.Add(this.BottonSelectHexFile);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.TextBoxHexFile);
-            this.Controls.Add(this.menuStrip1);
-            this.MainMenuStrip = this.menuStrip1;
             this.Name = "BeLoaderMain";
             this.Text = "F28069F Loader";
             this.Load += new System.EventHandler(this.BeLoaderMain_Load);
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericEcuID)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -361,22 +264,12 @@
         private System.Windows.Forms.Label LabelEndAddress;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label LabelAdler32;
-        private System.Windows.Forms.Button ButtonSelectDevice;
         private System.Windows.Forms.Button ButtonDownload;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label LabelDeviceType;
-        private System.Windows.Forms.Label LebelDeviceSerialNumber;
-        private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label LebelBootCANID;
-        private System.Windows.Forms.Label LabelJ1939CANID;
         private System.Windows.Forms.ComboBox comboPCAN;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Button ButtonConnectPCAN;
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem technicianToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuBurnSerial;
+        private System.Windows.Forms.NumericUpDown NumericEcuID;
     }
 }
 

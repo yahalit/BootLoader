@@ -16,7 +16,7 @@ namespace BELoader
         public struct Literals
         {
             public const int nbytesmod = 2048; // 512 longs per buffer  = 2048 bytes
-            public const int CodeStartAddress = 0x83000;
+            public const int CodeStartAddress = 0x3D8000;
             public const uint ADLER_MOD = 65521; // 2^16 - 15
             public const uint AddressFinal = 0x3f3eff ; // The statistics sector starts at 0x3f3f00
             public const uint AddressStatistics = 0x3f3f00;
@@ -160,6 +160,11 @@ namespace BELoader
                         return false;
                     }
 
+                    if ( address < Literals.CodeStartAddress )
+                    {
+                        ErrMsg = "An address is below the flash range";
+                        return false;
+                    }
 
                     // track min and max. 
                     // Do not consider addresses beyond the total range 
