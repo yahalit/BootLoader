@@ -104,7 +104,7 @@ namespace BELoader
                         LabelStartAddress.Text = "0X" + minadd.ToString("X");
                         LabelEndAddress.Text = "0X" + maxadd.ToString("X");
 
-                        VirtualProgramBuffer = HexVirtualSpace_T.BuildVirtualSpace(filename, minadd, maxadd);
+                        VirtualProgramBuffer = HexVirtualSpace_T.BuildVirtualSpace(filename );
                         int nWords = VirtualProgramBuffer.Length / 2;
                         ushort[] data = new ushort[nWords]; 
                         for ( int cnt = 0; cnt < nWords / 2; cnt++)

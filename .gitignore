@@ -6,3 +6,6 @@ BELoader/obj/
 *.d
 *.obj
 *.mk
+*.vsidx
+*.tmp
+

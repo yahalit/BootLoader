@@ -118,7 +118,8 @@ PAGE 1 :   /* Data Memory */
    RAML5       : origin = 0x00C000, length = 0x002000     /* on-chip RAM block L5 */
    RAML6       : origin = 0x00E000, length = 0x002000     /* on-chip RAM block L6 */
    RAML7       : origin = 0x010000, length = 0x002000     /* on-chip RAM block L7 */
-   RAML8       : origin = 0x012000, length = 0x002000     /* on-chip RAM block L8 */   
+   RAML8       : origin = 0x012000, length = 0x001f00     /* on-chip RAM block L8 */
+   RAMBOOTINFO : origin = 0x013f00, length = 0x000100     /* on-chip RAM block L8 */
 
 
    FLASHB      : origin = 0x3F0000, length = 0x004000     /* on-chip FLASH */     
@@ -172,6 +173,9 @@ SECTIONS
    .stack              : > RAMM0        PAGE = 1
    .ebss               : > DRAML1       PAGE = 1
    .esysmem            : > DRAML1       PAGE = 1
+
+
+   .bootinfo 		   : > RAMBOOTINFO  PAGE = 1
 
    /* Initalized sections go in Flash */
    /* For SDFlash to program these, they must be allocated to page 0 */

@@ -16,7 +16,8 @@ namespace BELoader
         public struct Literals
         {
             public const int nbytesmod = 2048; // 512 longs per buffer  = 2048 bytes
-            public const int CodeStartAddress = 0x3D8000;
+            public const int CodeLeastAddress = 0x3D8000;
+            public const int BootLeastAddress = 0x3F4000;
             public const uint ADLER_MOD = 65521; // 2^16 - 15
             public const uint AddressFinal = 0x3f3eff ; // The statistics sector starts at 0x3f3f00
             public const uint AddressStatistics = 0x3f3f00;
@@ -160,7 +161,7 @@ namespace BELoader
                         return false;
                     }
 
-                    if ( address < Literals.CodeStartAddress )
+                    if ( address < Literals.CodeLeastAddress )
                     {
                         ErrMsg = "An address is below the flash range";
                         return false;
@@ -171,7 +172,7 @@ namespace BELoader
                     minadd = Math.Min(minadd, address);
                     if (address < Literals.AddressFinal)
                     {   // Get the last address in use as start + length - 1 
-                        uint candidate = address + (uint)nbytes - 1;
+                        uint candidate = address + (uint)nbytes/2 - 1;
                         maxadd = Math.Max(maxadd, candidate);
                     }
 
@@ -196,11 +197,10 @@ namespace BELoader
             }
 
             // round up max address to  k * nbytesmod - 1 
-            uint n = (uint)((maxadd + 1) / nbytesmod);
-            if (n * nbytesmod != (maxadd + 1))
-            {
-                maxadd = (uint)(nbytesmod * (n + 1) - 1);
-            }
+            maxadd |= (uint)1; 
+
+            // Make the minimum address DWORD aligned            
+            minadd &=  ~(uint)1; 
 
             return true;
 
@@ -218,11 +218,11 @@ namespace BELoader
         /// - Skips records with address >= AddressFinal.
         /// - For each word, writes two bytes (big-endian), then increments address.
         /// </summary>
-        public static byte[] BuildVirtualSpace(string fname, uint minadd, uint maxadd )
+        public static byte[] BuildVirtualSpace(string fname  )
         {
             // Fill program space with 0xff 
             // space = ones(1, (maxadd - minadd + 1)*2) * 255;
-            int spaceLen = checked((int)((maxadd - minadd + 1u) * 2u));
+            int spaceLen = checked((int)((Literals.BootLeastAddress - Literals.CodeLeastAddress) * 2u));
             byte [] space = new byte[spaceLen];
             for (int i = 0; i < spaceLen; i++)
             {
@@ -266,7 +266,7 @@ namespace BELoader
                     for (int c1 = 1; c1 <= nbytes; c1 += 2)
                     {
                         // reladd = (address - minadd) * 2;
-                        int reladd = checked((int)((address - minadd) * 2u));
+                        int reladd = checked((int)((address - Literals.CodeLeastAddress ) * 2u));
 
                         // Guard against out-of-range writes
                         if ((uint)reladd + 1u >= (uint)space.Length)
@@ -284,6 +284,11 @@ namespace BELoader
                 }
             }
 
+            // Kill the statistics region anyway 
+            for  (int cnt = (int)(Literals.AddressStatistics - Literals.CodeLeastAddress); cnt < spaceLen; cnt++ )
+            {
+                space[cnt] = 0xFF;
+            }
             return space;
         }
 

@@ -186,7 +186,6 @@
       <DependentUpon>BeLoaderMain.cs</DependentUpon>
     </Compile>
     <Compile Include="Class1.cs" />
-    <Compile Include="LssScanner.cs" />
     <Compile Include="HexVirtualSpace_T.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="PCAN_T.cs" />

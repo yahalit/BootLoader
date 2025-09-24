@@ -59,6 +59,7 @@
 //
 // Included Files
 //
+#define VARS_OWNER // This files owns allocated variables
 #include "StructDef.h"
 //
 // Callback function.  Function specified by defining Flash_CallbackPtr
@@ -111,9 +112,147 @@ SECTOR Sector[8]= {
 
 #define Device_cal (void   (*)(void))0x3D7C80
 
+
+const short unsigned Verse[64] =
+        { 73    ,110  ,  32  , 116  , 104 ,  101  ,  32 ,   98 ,  101 ,  103 ,  105  , 110  , 110 ,  105 ,  110  , 103 ,   32 ,   71,
+          111   ,100  ,  32  ,  99  , 114 ,  101  ,  97 ,  116 ,  101 ,  100 ,   32  , 116  , 104 ,  101 ,   32  , 104 ,  101 ,   97,
+          118   ,101  , 110  ,  32  ,  97 ,  110  , 100 ,  32  ,  116 ,  104 ,  101  ,  32  , 101 ,   97 ,  114  , 116 ,  104 ,   46,
+          0,0,0,0,0,0,0,0,0,0} ;
+
 //
 // Main
 //
+
+
+unsigned long ComputeAdler32(long unsigned StartAddress, long unsigned nWords)
+{
+    short unsigned *p1 ;
+    long unsigned i;
+    unsigned long  s1 ;
+    unsigned long  s2 ;
+    s1 = 1 ;
+    s2 = 0 ;
+    if ( StartAddress < FLASH_START_ADDR)
+    {
+        StartAddress = FLASH_START_ADDR ;
+    }
+    if ( StartAddress >= STATISTICS_ADDRESS-4)
+    {
+        StartAddress = STATISTICS_ADDRESS-4 ;
+    }
+    if ( nWords > STATISTICS_ADDRESS - StartAddress  )
+    {
+        nWords = STATISTICS_ADDRESS - StartAddress ;
+    }
+    if ( nWords < 2)
+    {
+        nWords = 2 ;
+    }
+    if ( nWords & 1 )
+    {
+        nWords += 1 ;
+    }
+
+    p1 = (short unsigned *) StartAddress ;
+    for ( i = 0 ; i < nWords ; i++)
+    {
+        s1 += p1[i];
+        if (s1 >= ADLER_MOD) s1 -= ADLER_MOD;
+
+        s2 += s1;
+        if (s2 >= ADLER_MOD) s2 -= ADLER_MOD;
+    }
+
+    return (s2 << 16) | s1;
+}
+
+
+
+
+
+typedef void (*VoidFun)(void) ;
+
+struct
+{
+    long  unsigned password  ;
+    short unsigned DefaultDeviceAddress  ;
+    short unsigned ClaimedDeviceAddress  ;
+} BootInfo ;
+
+
+
+#pragma DATA_SECTION(BootInfo,".bootinfo");
+
+
+/**
+ * @brief Verify application image and handle boot-mode request.
+ * @retval 1 Application OK (and no boot override)
+ * @retval 0 Invalid image or explicit boot-mode request
+ *
+ * @note Side-effect: may set global CanId from BootInfo.
+ */
+
+short TestApplicationOk()
+{
+    short cnt ;
+    long unsigned AdlerCand ;
+    const short unsigned * pVerse = (const short unsigned *) VERSE_ADDRESS ;
+    const long unsigned * pCcsStamp = (const long unsigned *) CCS_STAMP_ADDRESS;
+    const long unsigned * pStartAddress = (const long unsigned *) CODE_START_ADDRESS;
+    const long unsigned * pEndAddress = (const long unsigned *) CODE_END_ADDRESS;
+    const long unsigned * pCSAddress = (const long unsigned *) CODE_CHECKSUM_ADDRESS;
+
+    // First of all test if this code is directly compiled by CCS. If so it ok
+    if ( *pCcsStamp == CCS_COMPILED_PASSWORD )
+    {
+        return 1 ;
+    }
+
+    // Test the verse
+    for ( cnt = 0 ; cnt < 64 ; cnt++)
+    {
+        if (Verse[cnt] !=  pVerse[cnt])
+        {
+            return 0 ;
+        }
+    }
+
+    //Test the checksum
+    AdlerCand = ComputeAdler32( *pStartAddress, (*pEndAddress) - (*pStartAddress) );
+    if ( AdlerCand != *pCSAddress)
+    {
+        return 0 ;
+    }
+
+    // Next see if there is any message instructing to go boot mode.
+    // This of course make sense only if the application was tested ok
+    CanId = DEFAULT_CAN_ID ;
+    if ( BootInfo.password == 0x12345678)
+    {
+        if (BootInfo.ClaimedDeviceAddress >= 1 && BootInfo.ClaimedDeviceAddress < MAX_DEVICE_ADDRESS )
+        {
+            CanId = BootInfo.ClaimedDeviceAddress ;
+        }
+        else
+        {
+            if (BootInfo.DefaultDeviceAddress >= 1 && BootInfo.DefaultDeviceAddress < MAX_DEVICE_ADDRESS )
+            {
+                CanId = BootInfo.DefaultDeviceAddress ;
+            }
+        }
+        return 0 ;
+    }
+
+    // Done
+    return 1 ;
+}
+
+
+
+
+
+
+volatile short bRunIdle ;
 void main(void)
 {   
     //
@@ -165,8 +304,16 @@ void main(void)
     // 6) Re-enable the missing clock detect logic 
     //
 
+    // Thats the time to see if the app is ok. If ok, we shall not even initialize the PLL
+    if ( TestApplicationOk() == 1)
+    {
+        ((VoidFun)USER_APP_START)() ;
+    }
+
     InitPeripherals()  ;
 
+    SetupCan( (long unsigned) CanId );
+    J1939ProtocolEnable = 1 ;
 
     //
     // Unlock the CSM.
@@ -177,12 +324,14 @@ void main(void)
     // If the flash API functions are executed from secure memory 
     // (L0-L3) then this step is not required.
     //
+
+#ifdef USE_FLASH_PASSWORD
     Status = Example_CsmUnlock();
     if(Status != STATUS_SUCCESS) 
     {
         Example_Error(Status);
     }
-
+#endif
     //
     // We must also copy required user interface functions to RAM
     //
@@ -207,6 +356,8 @@ void main(void)
     Flash_CPUScaleFactor = SCALE_FACTOR;
     EDIS;
 
+
+
     //
     // Initalize Flash_CallbackPtr.
     //
@@ -225,6 +376,17 @@ void main(void)
     // Jump to SARAM and call the Flash API functions
     //
     Example_CallFlashAPI();
+
+    bRunIdle = 1 ;
+
+    // Idle loop code
+    while(bRunIdle)
+    {
+        if ( J1939ProtocolEnable )
+        {
+            J1939Handler() ;
+        }
+    }
 }
 
 //
