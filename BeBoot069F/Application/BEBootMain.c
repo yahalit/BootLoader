@@ -78,14 +78,6 @@ FLASH_ST FlashStatus;
 #define  WORDS_IN_FLASH_BUFFER 0x100       // Programming data buffer, Words
 Uint16  Buffer[WORDS_IN_FLASH_BUFFER];
 
-//
-// Sector address info
-//
-typedef struct
-{
-    Uint16 *StartAddr;
-    Uint16 *EndAddr;
-} SECTOR;
 
 //
 // Defines
@@ -96,28 +88,9 @@ typedef struct
 
 #define FLASH_END_ADDR    0x3F7FFF
 
-
-#define FLASH_START_ADDR  0x3D8000
-SECTOR Sector[8]= {
-         (Uint16 *) 0x3D8000,(Uint16 *) 0x3DBFFF,
-         (Uint16 *) 0x3DC000,(Uint16 *) 0x3DFFFF,
-         (Uint16 *) 0x3E0000,(Uint16 *) 0x3E3FFF,
-         (Uint16 *) 0x3E4000,(Uint16 *) 0x3E7FFF,
-         (Uint16 *) 0x3E8000,(Uint16 *) 0x3EBFFF,
-         (Uint16 *) 0x3EC000,(Uint16 *) 0x3EFFFF,
-         (Uint16 *) 0x3F0000,(Uint16 *) 0x3F3FFF,
-         (Uint16 *) 0x3F4000,(Uint16 *) 0x3F7FFF,
-};
-
-
 #define Device_cal (void   (*)(void))0x3D7C80
 
-
-const short unsigned Verse[64] =
-        { 73    ,110  ,  32  , 116  , 104 ,  101  ,  32 ,   98 ,  101 ,  103 ,  105  , 110  , 110 ,  105 ,  110  , 103 ,   32 ,   71,
-          111   ,100  ,  32  ,  99  , 114 ,  101  ,  97 ,  116 ,  101 ,  100 ,   32  , 116  , 104 ,  101 ,   32  , 104 ,  101 ,   97,
-          118   ,101  , 110  ,  32  ,  97 ,  110  , 100 ,  32  ,  116 ,  104 ,  101  ,  32  , 101 ,   97 ,  114  , 116 ,  104 ,   46,
-          0,0,0,0,0,0,0,0,0,0} ;
+#define FLASH_START_ADDR  0x3D8000
 
 //
 // Main
@@ -168,20 +141,6 @@ unsigned long ComputeAdler32(long unsigned StartAddress, long unsigned nWords)
 
 
 
-
-
-typedef void (*VoidFun)(void) ;
-
-struct
-{
-    long  unsigned password  ;
-    short unsigned DefaultDeviceAddress  ;
-    short unsigned ClaimedDeviceAddress  ;
-} BootInfo ;
-
-
-
-#pragma DATA_SECTION(BootInfo,".bootinfo");
 
 
 /**
@@ -313,7 +272,8 @@ void main(void)
     InitPeripherals()  ;
 
     SetupCan( (long unsigned) CanId );
-    J1939ProtocolEnable = 1 ;
+
+    InitLoader() ;
 
     //
     // Unlock the CSM.
@@ -385,6 +345,10 @@ void main(void)
         if ( J1939ProtocolEnable )
         {
             J1939Handler() ;
+        }
+        if ( LoadProtocolEnable )
+        {
+            LoaderProtocol() ;
         }
     }
 }

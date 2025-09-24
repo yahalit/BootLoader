@@ -76,10 +76,10 @@ void InterpretJ1939 (CanMsg_T *msg , J1939Id_T *Id )
         TxMsg.Id |= ((CanId<<8) | Id->SourceAddress) ;
 
         // Wait response transmission complete
-        TxJ1939Message( &TxMsg) ;
+        TxMessage( &TxMsg ,1 ) ;
 
         // Kill J1939 protocol
-        J1939ProtocolEnable = 0 ;
+        //J1939ProtocolEnable = 0 ;
     }
 
     if ( Id->PduFormat == J1939_ADDRESS_CLAIM_PDU_FORMAT )
@@ -92,8 +92,17 @@ void InterpretJ1939 (CanMsg_T *msg , J1939Id_T *Id )
         }
 
         // Wait response transmission complete
-        TxJ1939Message(& TxMsg) ;
+        TxMessage(& TxMsg , 1 ) ;
+        WaitTx29Complete( 20000UL ) ;
 
+        // Kill the BootInfo
+        BootInfo.password = 0xffffffff ;
+
+        // Erase all the sectors
+        EraseAllUserSectors() ;
+
+        // And reboot.
+        RebootViaWatchdog() ;
     }
 
 }

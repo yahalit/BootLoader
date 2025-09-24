@@ -83,11 +83,11 @@ PAGE 0:    /* Program Memory */
    PRAML0      : origin = 0x008000, length = 0x000800     /* on-chip RAM block L0 */
    OTP         : origin = 0x3D7800, length = 0x000400     /* on-chip OTP */
 
-   FLASHG      : origin = 0x3DC000, length = 0x004000     /* on-chip FLASH */
-   FLASHF      : origin = 0x3E0000, length = 0x004000     /* on-chip FLASH */
-   FLASHE      : origin = 0x3E4000, length = 0x004000     /* on-chip FLASH */
-   FLASHD      : origin = 0x3E8000, length = 0x004000     /* on-chip FLASH */
-   FLASHC      : origin = 0x3EC000, length = 0x004000     /* on-chip FLASH */
+   //FLASHG      : origin = 0x3DC000, length = 0x004000     /* on-chip FLASH */
+   //FLASHF      : origin = 0x3E0000, length = 0x004000     /* on-chip FLASH */
+   //FLASHE      : origin = 0x3E4000, length = 0x004000     /* on-chip FLASH */
+   //FLASHD      : origin = 0x3E8000, length = 0x004000     /* on-chip FLASH */
+   //FLASHC      : origin = 0x3EC000, length = 0x004000     /* on-chip FLASH */
    FLASHA      : origin = 0x3F4000, length = 0x003F80     /* on-chip FLASH */
    CSM_RSVD    : origin = 0x3F7F80, length = 0x000076     /* Part of FLASHA.  Program with all 0x0000 when CSM is in use. */
    BEGIN       : origin = 0x3F7FF6, length = 0x000002     /* Part of FLASHA.  Used for "boot to Flash" bootloader mode. */
@@ -116,8 +116,8 @@ PAGE 1 :   /* Data Memory */
    RAML3       : origin = 0x009000, length = 0x001000	  /* on-chip RAM block L3 */
    RAML4       : origin = 0x00A000, length = 0x002000     /* on-chip RAM block L4 */
    RAML5       : origin = 0x00C000, length = 0x002000     /* on-chip RAM block L5 */
-   RAML6       : origin = 0x00E000, length = 0x002000     /* on-chip RAM block L6 */
-   RAML7       : origin = 0x010000, length = 0x002000     /* on-chip RAM block L7 */
+   RAML67       : origin = 0x00E000, length = 0x004000     /* on-chip RAM block L6 */
+   // RAML7       : origin = 0x010000, length = 0x002000     /* on-chip RAM block L7 */
    RAML8       : origin = 0x012000, length = 0x001f00     /* on-chip RAM block L8 */
    RAMBOOTINFO : origin = 0x013f00, length = 0x000100     /* on-chip RAM block L8 */
 
@@ -176,6 +176,8 @@ SECTIONS
 
 
    .bootinfo 		   : > RAMBOOTINFO  PAGE = 1
+   .progbuffer		   : > RAML67       PAGE = 1
+   .dirtybuffer		: > RAML8			PAGE = 1
 
    /* Initalized sections go in Flash */
    /* For SDFlash to program these, they must be allocated to page 0 */

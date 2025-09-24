@@ -9,6 +9,8 @@
 #define APPLICATION_CONSTDEF_H_
 
 
+#define CPU_FRQ_MHZ 90
+
 #define ADLER_MOD 65521
 #define DEFAULT_CAN_ID 1
 #define MAX_DEVICE_ADDRESS 239
@@ -29,7 +31,11 @@
 #define CODE_CHECKSUM_ADDRESS 0x3F3F44
 
 
+#define CodeLeastAddress 0x3D8000
+#define BootLeastAddress 0x3F4000
+
 
 #define CCS_COMPILED_PASSWORD 0x12345678
+
 
 #endif /* APPLICATION_CONSTDEF_H_ */

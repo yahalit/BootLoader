@@ -112,6 +112,22 @@ void InitECanGpio(void)
     EDIS;
 }
 
+/*
+ * Program CPU timers 1 and 2 to count 1usec steps
+ */
+void setupTimers(void)
+{
+    CpuTimer0Regs.PRD.all = 0xffffffff ;
+    CpuTimer0Regs.TPR.bit.TDDR = CPU_FRQ_MHZ - 1 ;
+    CpuTimer0Regs.TIM.all = 0 ;
+    CpuTimer0Regs.TCR.bit.TIE = 1 ;
+
+    CpuTimer1Regs.PRD.all = 0xffffffff ;
+    CpuTimer1Regs.TPR.bit.TDDR = CPU_FRQ_MHZ - 1 ;
+    CpuTimer1Regs.TIM.all = 0 ;
+    CpuTimer1Regs.TCR.bit.TIE = 1 ;
+}
+
 
 void  InitPeripherals(void)
 {
@@ -132,10 +148,44 @@ void  InitPeripherals(void)
     //
     SetPLL() ;
 
+    setupTimers() ;
     //
     // Configure CAN pins at the GPIO MUX level
     //
     InitECanGpio();
 
+}
+
+/*
+ * Reboot by arming watch dog, and wait its expiry
+ */
+void RebootViaWatchdog(void)
+{
+    // Stop all interrupts so nobody services the dog accidentally
+    DINT;
+    IER = 0;
+    IFR = 0;
+
+    EALLOW;
+
+    // Ensure watchdog is configured to cause a device reset (not an interrupt)
+    // SCSR: WDENINT=0 → reset on timeout; WDOVERRIDE=0 (respect writes to WDCR)
+    SysCtrlRegs.SCSR = 0x0000;
+
+    // WDCR write must include the WDCHK key pattern; 0x0028 is the standard “enable with fastest prescale”
+    //  - WDCHK = 0b101 (key, embedded in 0x0028)
+    //  - WDDIS = 0 (enabled)
+    //  - WDPS  = 0 (fastest prescaler)
+    SysCtrlRegs.WDCR = 0x0028; // Ensure enabling
+    SysCtrlRegs.WDCR = 0x0000; // Kill by wrong password = immediate reset
+
+    EDIS;
+
+    // Sit tight until the watchdog times out and resets the device
+    // (Don’t service the watchdog key anywhere in this loop.)
+    for (;;)
+    {
+        asm(" NOP");
+    }
 }
 
